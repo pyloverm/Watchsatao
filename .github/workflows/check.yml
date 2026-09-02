@@ -1,0 +1,29 @@
+name: check
+
+# Alternative au cron Vercel : une vérification toutes les 6 heures.
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Appeler /api/check
+        env:
+          CHECK_URL: ${{ secrets.CHECK_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$CHECK_URL" ] || [ -z "$CRON_SECRET" ]; then
+            echo "Secrets CHECK_URL et CRON_SECRET requis." >&2
+            exit 1
+          fi
+          status=$(curl -sS -o response.json -w '%{http_code}' \
+            -H "Authorization: Bearer $CRON_SECRET" "$CHECK_URL")
+          cat response.json
+          echo
+          if [ "$status" != "200" ]; then
+            echo "La vérification a répondu $status." >&2
+            exit 1
+          fi

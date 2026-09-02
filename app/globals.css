@@ -148,3 +148,34 @@ a {
 a:hover {
   text-decoration-thickness: 2px;
 }
+
+.meta {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.sources {
+  margin-top: calc(var(--space) * 1.5);
+}
+
+.sources ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.sources li + li {
+  margin-top: 0.4rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  border: 1px solid currentColor;
+}
+
+.badge--down {
+  color: var(--error);
+}

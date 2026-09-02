@@ -15,10 +15,15 @@ export const SATAO_URL = "https://recrutamento.cm-satao.pt/processos-ativos";
 export type ContestState = "Aberto" | "Fechado";
 
 export interface SataoProcess {
-  /** `recruitment_process_id` de la source, utilisé comme clé de déduplication. */
+  /** `recruitment_process_id`, identifiant propre à la source municipale. */
   readonly id: string;
   readonly title: string;
   readonly url: string;
+  /**
+   * Code d'offre BEP, seul identifiant commun aux deux sources. Il ne figure
+   * pas dans la liste : il faut ouvrir la fiche pour le lire.
+   */
+  readonly bepCode?: string;
 }
 
 export interface SataoResult {
@@ -147,4 +152,46 @@ export async function fetchSatao(): Promise<SataoResult> {
   }
 
   return parseSatao(await response.text(), new Date().toISOString());
+}
+
+/**
+ * Code d'offre BEP porté par la fiche d'une procédure, sous la forme
+ * « Código da BEP: OE202507/1239 ». C'est le seul identifiant commun aux deux
+ * sources, donc la clé de déduplication.
+ */
+const BEP_CODE_LABELLED = /c[óo]digo\s+da\s+bep\s*:?\s*(OE\d{6}\/\d{4})/i;
+const BEP_CODE_BARE = /\b(OE\d{6}\/\d{4})\b/;
+
+/** Extrait le code BEP d'une fiche de procédure déjà récupérée. */
+export function extractBepCode(detailHtml: string): string | undefined {
+  const text = decodeHtml(detailHtml.replace(/<[^>]*>/g, " ")).replace(
+    /\s+/g,
+    " ",
+  );
+  return (
+    BEP_CODE_LABELLED.exec(text)?.[1] ?? BEP_CODE_BARE.exec(text)?.[1]
+  );
+}
+
+/**
+ * Récupère la fiche d'une procédure pour en lire le code BEP. Une fiche
+ * illisible n'est pas fatale : la procédure reste signalée, simplement sans
+ * clé commune avec la BEP.
+ */
+export async function fetchBepCode(
+  processUrl: string,
+): Promise<string | undefined> {
+  try {
+    const response = await fetch(processUrl, {
+      cache: "no-store",
+      headers: {
+        "User-Agent": "satao-watch (surveillance de procédures concursais)",
+        Accept: "text/html",
+      },
+    });
+    if (!response.ok) return undefined;
+    return extractBepCode(await response.text());
+  } catch {
+    return undefined;
+  }
 }

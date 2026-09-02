@@ -1,4 +1,9 @@
-import { fetchSatao, type SataoResult } from "@/lib/satao";
+import {
+  hasFailed,
+  runWatch,
+  type Opening,
+  type WatchResult,
+} from "@/lib/watch";
 import {
   readState,
   sendEmail,
@@ -8,6 +13,7 @@ import {
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 const STATE_KEY = "satao-watch:state";
 
@@ -28,29 +34,47 @@ function authorized(request: Request): boolean {
   if (expected === undefined || expected.trim() === "") return false;
 
   const header = request.headers.get("authorization");
-  const bearer = header?.startsWith("Bearer ") === true
-    ? header.slice("Bearer ".length)
-    : undefined;
+  const bearer =
+    header?.startsWith("Bearer ") === true
+      ? header.slice("Bearer ".length)
+      : undefined;
   const provided = bearer ?? request.headers.get("x-cron-secret") ?? undefined;
 
   return provided !== undefined && secretMatches(provided, expected.trim());
 }
 
-function openingEmail(result: SataoResult): { subject: string; html: string } {
-  const items = result.processes
-    .map(
-      (process): string =>
-        `<li><a href="${process.url}">${process.title || `Procédure ${process.id}`}</a></li>`,
-    )
-    .join("");
+function escape(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
 
+function line(opening: Opening): string {
+  const details = [
+    opening.code,
+    opening.entity,
+    opening.deadline === undefined
+      ? undefined
+      : `candidatures jusqu'au ${opening.deadline}`,
+    `annoncée par ${opening.sources.join(" et ")}`,
+  ]
+    .filter((part): part is string => part !== undefined && part !== "")
+    .map(escape)
+    .join(" · ");
+
+  return `<li><a href="${escape(opening.url)}">${escape(opening.title)}</a><br><small>${details}</small></li>`;
+}
+
+function openingEmail(result: WatchResult): { subject: string; html: string } {
   return {
-    subject: "Sátão : candidatures ouvertes",
+    subject: `Sátão : ${result.openings.length} candidature(s) ouverte(s)`,
     html: [
       "<h1>Un procédimento concursal accepte des candidatures</h1>",
-      "<p>La plateforme de recrutement de la Câmara Municipal de Sátão est passée à l'état <strong>Aberto</strong>.</p>",
-      items === "" ? "" : `<ul>${items}</ul>`,
-      `<p><a href="https://recrutamento.cm-satao.pt/processos-ativos">Voir les processus actifs</a></p>`,
+      `<ul>${result.openings.map(line).join("")}</ul>`,
+      '<p><a href="https://recrutamento.cm-satao.pt/processos-ativos">Plateforme municipale</a> · ',
+      '<a href="https://www.bep.gov.pt/pages/oferta/Oferta_Pesquisa_basica.aspx">Bolsa de Emprego Público</a></p>',
     ].join(""),
   };
 }
@@ -60,23 +84,29 @@ export async function GET(request: Request): Promise<Response> {
     return Response.json({ error: "Non autorisé." }, { status: 401 });
   }
 
-  let result: SataoResult;
-  try {
-    result = await fetchSatao();
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : String(error);
-    return Response.json({ error: message }, { status: 502 });
+  const result = await runWatch();
+
+  // Les deux sources muettes : rien à conclure, et surtout rien à mémoriser.
+  if (hasFailed(result.satao) && hasFailed(result.bep)) {
+    return Response.json(
+      {
+        error: "Les deux sources sont injoignables.",
+        satao: result.satao.message,
+        bep: result.bep.message,
+      },
+      { status: 502 },
+    );
   }
 
   const previous = await readState(STATE_KEY);
   const changed = previous !== result.state;
   let notified = false;
 
-  // On ne notifie qu'à la transition vers Aberto. Sans mémoire (Upstash absent),
-  // `previous` vaut toujours `undefined` et chaque exécution ouverte renotifie.
+  // On ne notifie qu'à la transition vers Aberto. Sans mémoire (Upstash
+  // absent), `previous` vaut toujours `undefined` et chaque exécution
+  // ouverte renotifie.
   if (result.state === "Aberto" && changed) {
-    const outcome = await sendEmail(openingEmail(result));
-    notified = outcome.sent;
+    notified = (await sendEmail(openingEmail(result))).sent;
   }
 
   if (changed) {
@@ -85,11 +115,27 @@ export async function GET(request: Request): Promise<Response> {
 
   return Response.json({
     state: result.state,
-    processes: result.processes,
+    openings: result.openings,
     previousState: previous ?? null,
     changed,
     notified,
     stateStorage: stateStorageConfigured(),
+    sources: {
+      satao: hasFailed(result.satao)
+        ? { failed: true, message: result.satao.message }
+        : {
+            state: result.satao.state,
+            processes: result.satao.processes.length,
+            emptyNoticeFound: result.satao.emptyNoticeFound,
+          },
+      bep: hasFailed(result.bep)
+        ? { failed: true, message: result.bep.message }
+        : {
+            offers: result.bep.offers.length,
+            emptyNoticeFound: result.bep.emptyNoticeFound,
+            truncated: result.bep.truncated,
+          },
+    },
     checkedAt: result.checkedAt,
   });
 }

@@ -1,0 +1,623 @@
+
+<!DOCTYPE HTML>
+
+<html lang="pt">
+<head id="ctl00_ctl00_Head1"><title>
+	BEP - Bolsa de Emprego Público
+</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta property="fb:app_id" content="140586622674265" /><meta property="og:url" content="https://www.bep.gov.pt/" /><meta property="og:type" content="website" /><meta property="og:title" content="BEP" /><meta property="og:description" content="Bolsa de Emprego Público" /><meta property="og:image" content="https://www.bep.gov.pt/Imagens/Social/LogoFB.jpg" /><meta property="og:image:secure_url" content="https://www.bep.gov.pt/Imagens/Social/LogoFB.jpg" /><meta property="og:image:type" content="image/jpg" /><meta property="og:image:type" content="image/jpg" />
+
+ 
+    <!-- Bootstrap -->
+    <link href="../../Bootstrap341/css/bootstrap.min.css" rel="stylesheet" /><link href="../../Bootstrap341/css/bootstrap-theme.min.css" rel="stylesheet" /><link href="../../Styles/CSS/bepstyles.min.css" rel="stylesheet" /><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous" />
+
+ 
+    <!--[if lte IE 8]><link href="../../Styles/CSS/iebepstyles.css" rel="stylesheet" /><![endif]-->
+    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
+    
+   
+
+
+    <script type="text/javascript">
+        function PopupAbove(e, pickerID) {
+            var datePicker;
+            if (pickerID == null) {
+                datePicker = $find(pickerID.toString());
+            }
+            else {
+                datePicker = $find(pickerID);
+            }
+            var textBox = datePicker.get_textBox();
+            var popupElement = datePicker.get_popupContainer();
+            var dimensions = datePicker.getElementDimensions(popupElement);
+            var position = datePicker.getElementPosition(textBox);
+            datePicker.showPopup(position.x, position.y - dimensions.height + 185);
+        }
+    </script>
+ 
+<link href="/WebResource.axd?d=VdPoLqp1pEU6N0-IfFplZNP5M-0QdACrh4RZdGUE5J-vtW8fk_ocTmXEicqz1ZraHmagWbc6d3uhhxj9klz4GdsCpdHhIlvFfDDXFyr2DD4EgY1LRiVZR1gJe6eN9mPqrsHEeA2&amp;t=638979566320000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /><link href="/WebResource.axd?d=KXEMm0z2IM_9hqZpf3J3lUSznU4yETK3Y9w5WsaMJX7cU0WiOYajcXSgaaGPuLYET4tudTxLGcObDTidRrujhlD03XOcYx9Xx2x-LNAF8_e4l0hNbdXzCA04b93BorL2E-twqQ2&amp;t=638979566320000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /><link href="/WebResource.axd?d=Y6Mwy1REwKQmna6rnT5WsEhfJRdWk1emC1UStIvyhAt6q-Vi3Mvs-wDqJqNn_TEdbUUzZd2bY8qbtp3SgQMpTObFB0Uea7r9N-f_m5yrIC2agixPtkR-yiCz9flJHRpLRoTvPDpoabYtUTcm9QlPKPxpdt01&amp;t=638979566320000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /><link href="/WebResource.axd?d=vsKpXOsoEwDUfVug9KOqSoTCPAfr3Qa8NpsQgfN1BXKqvPlEdMo82-mkHItNUTTez-KhxPNQab3saIyaG-F88tMWDDD8Rr3xR0hN0hPLk340YpCO0&amp;t=638979566320000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /><link href="/WebResource.axd?d=gGPJcKA2egeNvbDi_oMTraaJYX0pAbnCWolwtkm0pvnniGhJELUs-UpjAvgQQTc4cY1jqDxP9BldciZv8l31LONrpiWvh5BOHU585cd6S6WfDCE5UJg3tge1MUUR0orYoiSFJA2&amp;t=638979566320000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /></head>
+<body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+     <script type="text/javascript" src='../../Javascript/jquery/jquery.min.js'></script>
+     <script type="text/javascript" src='../../Javascript/jquery/jquery-ui.min.js'></script>
+   <!-- Include all compiled plugins (below), or include individual files as needed -->
+   <script type="text/javascript" src='../../Bootstrap341/js/bootstrap.min.js'></script>
+   <script type="text/javascript" src='../../JavaScript/Scripts/bep.min.js'></script>
+    
+    
+
+    <form name="aspnetForm" method="post" action="./Oferta_Pesquisa_basica.aspx" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_ucSearch')" id="aspnetForm">
+<div>
+<input type="hidden" name="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadScriptManager1_TSM" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadScriptManager1_TSM" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="VIEWSTATE-FIXTURE-ABREGE" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZDVkh-TWuEWurSUibDghQ5umFpuKy0XJbEPghPrYwzoqJq-3Zg2&amp;t=636041074380000000" type="text/javascript"></script>
+
+<script type='text/javascript'></script>
+<script src="/Telerik.Web.UI.WebResource.axd?_TSM_HiddenField_=ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadScriptManager1_TSM&amp;compress=1&amp;_TSM_CombinedScripts_=%3b%3bSystem.Web.Extensions%2c+Version%3d4.0.0.0%2c+Culture%3dneutral%2c+PublicKeyToken%3d31bf3856ad364e35%3aen-US%3a0f2ae90c-87fb-4f74-9210-4b167170d85e%3aea597d4b%3ab25378d2%3bTelerik.Web.UI%2c+Version%3d2022.1.302.45%2c+Culture%3dneutral%2c+PublicKeyToken%3d121fae78165ba3d4%3aen-US%3a519a718b-c62d-4bf2-9a78-90a0aad13e14%3a16e4e7cd%3af7645509%3a24ee1bba%3ac128760b%3a874f8ea2%3a19620875%3ac172ae1e%3af46195d3%3a9cdfc6e7%3a33715776%3ae330518b%3a2003d0b8%3a1e771326%3a88144a7a%3ac8618e41%3ae4f8f289%3a1a73651d%3a333f8d94" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="F7CA85E8" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+</div>
+       
+  
+        <div class="wrappper">
+            <a href="#pesquisarofertas" class="sr-only sr-only-focusable">Ir para conteúdo principal</a><!--link para invisuais saltarem o menu-->
+            <a id="ID_DESTINO" class="sr-only"></a>
+            <header class="mainheader">
+                <div class="topheader">
+                    <div class="container">
+                        <div class="topright">
+                            
+
+  
+<script type="text/javascript">
+
+    //    $(document).keypress(function (e) {
+    //        //disabilitar os enter
+    //        if (e.keyCode === 13) {
+    //            e.preventDefault();
+    //            return false;
+    //        }
+    //    });
+
+    // slight update to account for browsers not supporting e.which
+    document.onkeydown = function () {
+        switch (event.keyCode) {
+            case 116: //F5 button
+                event.returnValue = false;
+                event.keyCode = 0;
+                return false;
+            case 82: //R button
+                if (event.ctrlKey) {
+                    event.returnValue = false;
+                    event.keyCode = 0;
+                    return false;
+                }
+        }
+    }
+
+
+</script>
+
+<style type="text/css">
+    .esqueceupass {
+        font-size: 10px;
+        color: #333333;
+    }
+</style>
+
+
+<div id="ctl00_ctl00_Login2_pnlForm" class="loginbox">
+	
+    <span id="ctl00_ctl00_Login2_lblMensagem" class="ErrorText"></span>
+    
+    
+    <input type="image" name="ctl00$ctl00$Login2$btnLogin" id="ctl00_ctl00_Login2_btnLogin" title="Fazer Login" name="login" ReactToEnter="FALSE" src="../../Imagens/images/login.jpg" style="height:30px;width:105px;border-width:0px;" />
+    
+    <div id="ctl00_ctl00_Login2_pnlReset">
+		
+        <a id="ctl00_ctl00_Login2_hypReset" class="esqueceupass" href="https://www.sgu.gov.pt/v3/login.aspx?action=recuperarPassword&amp;retorno=aHR0cHM6Ly93d3cuYmVwLmdvdi5wdC9EZWZhdWx0LmFzcHg=">Esqueceu-se da password?</a>
+    
+	</div>
+
+</div>
+
+
+                            &nbsp;&nbsp;
+                            <input type="image" name="ctl00$ctl00$imgbtnCriarRegisto" id="ctl00_ctl00_imgbtnCriarRegisto" alt="Criar registo" src="../../Imagens/images/criarregisto.jpg" style="height:30px;width:105px;border-width:0px;" />
+                            <br />
+                            <a id="ctl00_ctl00_lnkRegistarOrg" class="esqueceupass" href="javascript:__doPostBack(&#39;ctl00$ctl00$lnkRegistarOrg&#39;,&#39;&#39;)" style="padding-left: 20px;">Registar Organismo</a>
+                            
+                            
+                            <div class="loginfeito">
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="logo" style="padding-left: 25px;">
+                            <a href="../../Default.aspx">
+                                <img src="../../Imagens/images/logo_bep2019.jpg" alt="Logotipo BEP" width="275" height="63" />
+                                
+                            </a>
+                        </div>
+
+                    </div>
+                    
+                </div>
+
+
+
+
+                <!--Menu-->
+                
+<script type='text/javascript' src='../../javascript/menuDropdowns.min.js'></script>
+<nav class="mainnav">
+    <div class="container">
+        <ul class="nav nav-pills"><li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Ofertas</a><ul class="dropdown-menu"><li class="menu-item"><a href="https://www.bep.gov.pt/pages/oferta/Oferta_Pesquisa_basica.aspx">Pesquisar Ofertas</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/oferta/Oferta_Pesquisa_Historico.aspx">Pesquisar Ofertas Expiradas</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/oferta/Pesquisa_Resultados.aspx">Pesquisar Resultados</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/oferta/Procedimento_AlteracaoJuri_Lista.aspx">Ofertas Com Alteração Júri</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/CReSAP/CReSAP_Pesquisa.aspx">Listar Ofertas Dirigentes Superiores</a></li></ul></li><li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Conta do Utilizador</a><ul class="dropdown-menu"><li class="menu-item"><a href="https://www.bep.gov.pt/pages/Registo/Registo_DadosLogin.aspx">Efetuar Registo na BEP </a></li></ul></li><li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Programa de incentivos ao interior</a><ul class="dropdown-menu"><li class="menu-item"><a href="https://www.bep.gov.pt/pages/MCI/ListaCentrosTeleTrabalho.aspx">Listar Centros de Teletrabalho</a></li><li class="menu-item"><a href="https://www.bep.gov.pt//pages/Registo/Registo_DadosLogin.aspx">Registos de interesse no programa</a></li></ul></li><li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Ofertas PRR</a><ul class="dropdown-menu"><li class="menu-item"><a href="https://www.bep.gov.pt/pages/PRR/ListaOfertasPRR.aspx">Lista de Ofertas PRR</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/Registo/Registo_DadosLogin.aspx">Registo de Interesse</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/docs/Guia_do_candidato_PRR_DGAEP.pdf">Guia do Candidato</a></li></ul></li><li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Sobre a BEP</a><ul class="dropdown-menu"><li class="menu-item"><a href="https://www.bep.gov.pt/pages/SobreBep/Diploma.aspx">Diploma</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/SobreBep/Objectivos.aspx">Objetivos</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/SobreBep/Utilizadores.aspx">Utilizadores</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/SobreBep/Funcionalidades.aspx">Funcionalidades</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/SobreBep/PrivacidadeSeguranca.aspx">Privacidade e Segurança</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/SobreBep/EntidadeGestora.aspx">Entidade Gestora</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/Pages/Acessibilidade.aspx">Acessibilidade</a></li></ul></li><li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Ajuda</a><ul class="dropdown-menu"><li class="menu-item"><a href="https://www.bep.gov.pt/pages/Ajuda/Glossario.aspx">Glossário</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/Ajuda/Mapa_site.aspx">Mapa do Site</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/GestorConteudo/VersaoDois/ContactsShow.aspx">Contacte-nos</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/Pages/GestorConteudo/VersaoDois/FaqsShow.aspx">FAQs</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/Ajuda/Multimedia.aspx">Multimedia</a></li><li class="menu-item"><a href="https://www.bep.gov.pt/pages/Links/Links.aspx">Links</a></li></ul></li></ul>        
+    </div>
+</nav>
+
+            </header>
+            
+            
+
+<!--<img id="ctl00_ctl00_FormMasterContentPlaceHolder_imgTopLeft" src="../../imagens/cantos/1left_top.jpg" style="width:15px;border-width:0px;" />
+<img id="ctl00_ctl00_FormMasterContentPlaceHolder_imgtransparentTop" src="../../imagens/cantos/bit_tranparent.gif" style="height:1px;width:1px;border-width:0px;" />
+<img id="ctl00_ctl00_FormMasterContentPlaceHolder_imgTopRight" src="../../imagens/cantos/1right_top.jpg" style="height:15px;width:5px;border-width:0px;" />-->
+
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$RadScriptManager1', 'aspnetForm', [], [], [], 90, 'ctl00$ctl00');
+//]]>
+</script>
+
+    <div id="opac">
+        <img src="../../Imagens/ajax-loader.gif" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_Img1" alt="A carregar." style="padding-left: 50%; padding-top: 25%" />
+    </div>
+    <div id="panelbtn">
+        <div class="contentbox pesquisaroferta">
+            <div class="fundocinza">
+                <div class="container">
+                    <div class="quadrados">
+                    </div>
+                    
+
+<ol class="breadcrumb" style="padding-left:25px;">
+    <li><a title="link para home page" href="../../Default.aspx">Início</a></li>
+    <li><a href="javascript:void(0);">Ofertas</a></li>
+    <li class="active">Pesquisar Ofertas</li>
+</ol>
+
+
+
+                    <span id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_lblTitle" class="h2 largetitle">Pesquisar Ofertas</span>
+                </div>
+            </div>
+            <div class="fundobranco">
+                <div class="container">
+                    <div id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_pnlCriterios">
+	
+                        <div id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_divCarreira">
+                            <br />
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 purplebold">
+                                    Introduza um termo para pesquisa:
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-9">
+                                    <input name="ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$txtValor" type="text" value="Município" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_txtValor" class="BEPNormalTextBox" title="Introduza um termo para pesquisa" style="width:100%;" /> 
+                                 </div>
+                                 <div class="col-xs-12 col-sm-4 col-md-2">
+                                     <input type="submit" name="ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$ucSearch" value="Pesquisar" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_ucSearch" class="pink aspbutton divbutton" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-8 miniEx">
+                                    Ex: lisboa gestão segurança social
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row tablecenter tocenterbutton">
+                          <input type="submit" name="ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$ucPesqAvancada" value="Pesquisa Avançada ➜" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_ucPesqAvancada" class="pink aspbutton divbutton" />
+                            
+                        </div>
+                        <br />
+                    
+</div>
+                    <div id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_pnlGv">
+	
+                        <div id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_strDet" class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-12">
+                                <h4>
+                                    <span id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_lblTituloGV">Para ver o detalhe da oferta selecione o respectivo código.</span></h4>
+                            </div>
+                        </div>
+                        <div id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_ddlNegDiv" class="row numerodeitens">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <span id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_lblnReg">Página 1 de 5 - Nº Total de Registo(s):46</span>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 textright">
+                                Nº de Registos:
+                            <select name="ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$ddlNReg" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$ddlNReg\&#39;,\&#39;\&#39;)&#39;, 0)" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_ddlNReg" title="Nº de Registos">
+		<option selected="selected" value="10">10</option>
+		<option value="25">25</option>
+		<option value="50">50</option>
+
+	</select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-12">
+                                
+	<div class="AspNet-GridView" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao">
+			<table class="tableGV table beptablehp" summary="GvOfertaGestao">
+				<thead>
+					<tr>
+						<th scope="col"><a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Sort$Codigo&#39;)">Código</a></th>
+						<th scope="col"><a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Sort$TipoDesc&#39;)">Tipo Oferta</a></th>
+						<th scope="col"><a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Sort$VinculoDesc&#39;)">V&#237;nculo</a></th>
+						<th scope="col"><a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Sort$CarreiraDesc&#39;)">Carreira</a></th>
+						<th scope="col"><a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Sort$CategoriaDesc&#39;)">Categoria</a></th>
+						<th scope="col"><a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Sort$DistritoDesc&#39;)">Distrito</a></th>
+						<th scope="col"><a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Sort$OrganismoDesc&#39;)">Organismo</a></th>
+						<th scope="col"><a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Sort$HabilitacoesLiterariasDesc&#39;)">Habilita&#231;&#245;es Liter&#225;rias</a></th>
+						<th class="minidatawidth" scope="col"><a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Sort$DataLimiteCandidatura&#39;)">Data Limite</a></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl02_btnDetalhes" title="Ver detalhes da Oferta" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl02$btnDetalhes&#39;,&#39;&#39;)">OE202609/0087</a>
+                                            </td>
+						<td>Procedimento Concursal Comum</td>
+						<td>CTFP por tempo indeterminado</td>
+						<td>T&#233;cnico Superior</td>
+						<td>T&#233;cnico Superior</td>
+						<td>Viseu</td>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl02_btnDetalhesOrganismo" title="Ver detalhes do Organismo" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl02$btnDetalhesOrganismo&#39;,&#39;&#39;)">Câmara Municipal de Carregal do Sal</a>
+                                            </td>
+						<td>Licenciatura</td>
+						<td class="minidatawidth">
+                                                <span>2026-09-16  </span>
+                                            </td>
+					</tr>
+					<tr class="AspNet-GridView-Alternate">
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl03_btnDetalhes" title="Ver detalhes da Oferta" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl03$btnDetalhes&#39;,&#39;&#39;)">OE202609/0057</a>
+                                            </td>
+						<td>Procedimento Concursal Comum</td>
+						<td>CTFP por tempo indeterminado</td>
+						<td>Assistente T&#233;cnico</td>
+						<td>Assistente T&#233;cnico</td>
+						<td>Portalegre</td>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl03_btnDetalhesOrganismo" title="Ver detalhes do Organismo" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl03$btnDetalhesOrganismo&#39;,&#39;&#39;)">Câmara Municipal de Nisa</a>
+                                            </td>
+						<td>12&#186; ano (ensino secund&#225;rio)</td>
+						<td class="minidatawidth">
+                                                <span>2026-09-16  </span>
+                                            </td>
+					</tr>
+					<tr>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl04_btnDetalhes" title="Ver detalhes da Oferta" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl04$btnDetalhes&#39;,&#39;&#39;)">OE202609/0055</a>
+                                            </td>
+						<td>Procedimento Concursal Comum</td>
+						<td>CTFP por tempo indeterminado</td>
+						<td>Assistente T&#233;cnico</td>
+						<td>Assistente T&#233;cnico</td>
+						<td>Portalegre</td>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl04_btnDetalhesOrganismo" title="Ver detalhes do Organismo" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl04$btnDetalhesOrganismo&#39;,&#39;&#39;)">Câmara Municipal de Nisa</a>
+                                            </td>
+						<td>12&#186; ano (ensino secund&#225;rio)</td>
+						<td class="minidatawidth">
+                                                <span>2026-09-16  </span>
+                                            </td>
+					</tr>
+					<tr class="AspNet-GridView-Alternate">
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl05_btnDetalhes" title="Ver detalhes da Oferta" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl05$btnDetalhes&#39;,&#39;&#39;)">OE202609/0044</a>
+                                            </td>
+						<td>Procedimento Concursal Comum</td>
+						<td>CTFP por tempo indeterminado</td>
+						<td>T&#233;cnico Superior</td>
+						<td>T&#233;cnico Superior</td>
+						<td>Santar&#233;m</td>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl05_btnDetalhesOrganismo" title="Ver detalhes do Organismo" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl05$btnDetalhesOrganismo&#39;,&#39;&#39;)">Câmara Municipal de Ourém</a>
+                                            </td>
+						<td>Licenciatura</td>
+						<td class="minidatawidth">
+                                                <span>2026-09-16  </span>
+                                            </td>
+					</tr>
+					<tr>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl06_btnDetalhes" title="Ver detalhes da Oferta" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl06$btnDetalhes&#39;,&#39;&#39;)">OE202609/0026</a>
+                                            </td>
+						<td>Procedimento Concursal Comum</td>
+						<td>CTFP por tempo indeterminado</td>
+						<td>T&#233;cnico Superior</td>
+						<td>T&#233;cnico Superior</td>
+						<td>Coimbra</td>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl06_btnDetalhesOrganismo" title="Ver detalhes do Organismo" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl06$btnDetalhesOrganismo&#39;,&#39;&#39;)">Câmara Municipal de Cantanhede</a>
+                                            </td>
+						<td>Licenciatura</td>
+						<td class="minidatawidth">
+                                                <span>2026-09-15  </span>
+                                            </td>
+					</tr>
+					<tr class="AspNet-GridView-Alternate">
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl07_btnDetalhes" title="Ver detalhes da Oferta" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl07$btnDetalhes&#39;,&#39;&#39;)">OE202608/0871</a>
+                                            </td>
+						<td>Procedimento Concursal Comum</td>
+						<td>CTFP por tempo indeterminado</td>
+						<td>T&#233;cnico Superior</td>
+						<td>T&#233;cnico Superior</td>
+						<td>Viana do Castelo</td>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl07_btnDetalhesOrganismo" title="Ver detalhes do Organismo" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl07$btnDetalhesOrganismo&#39;,&#39;&#39;)">Câmara Municipal de Paredes de Coura</a>
+                                            </td>
+						<td>Licenciatura</td>
+						<td class="minidatawidth">
+                                                <span>2026-09-15  </span>
+                                            </td>
+					</tr>
+					<tr>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl08_btnDetalhes" title="Ver detalhes da Oferta" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl08$btnDetalhes&#39;,&#39;&#39;)">OE202608/0855</a>
+                                            </td>
+						<td>Procedimento Concursal Comum</td>
+						<td>CTFP por tempo indeterminado</td>
+						<td>Assistente Operacional</td>
+						<td>Assistente Operacional</td>
+						<td>Viana do Castelo</td>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl08_btnDetalhesOrganismo" title="Ver detalhes do Organismo" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl08$btnDetalhesOrganismo&#39;,&#39;&#39;)">Câmara Municipal de Paredes de Coura</a>
+                                            </td>
+						<td>Habilita&#231;&#227;o Ignorada</td>
+						<td class="minidatawidth">
+                                                <span>2026-09-15  </span>
+                                            </td>
+					</tr>
+					<tr class="AspNet-GridView-Alternate">
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl09_btnDetalhes" title="Ver detalhes da Oferta" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl09$btnDetalhes&#39;,&#39;&#39;)">OE202608/0853</a>
+                                            </td>
+						<td>Procedimento Concursal Comum</td>
+						<td>CTFP por tempo indeterminado</td>
+						<td>Assistente Operacional</td>
+						<td>Assistente Operacional</td>
+						<td>Viana do Castelo</td>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl09_btnDetalhesOrganismo" title="Ver detalhes do Organismo" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl09$btnDetalhesOrganismo&#39;,&#39;&#39;)">Câmara Municipal de Paredes de Coura</a>
+                                            </td>
+						<td>Habilita&#231;&#227;o Ignorada</td>
+						<td class="minidatawidth">
+                                                <span>2026-09-15  </span>
+                                            </td>
+					</tr>
+					<tr>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl10_btnDetalhes" title="Ver detalhes da Oferta" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl10$btnDetalhes&#39;,&#39;&#39;)">OE202608/0852</a>
+                                            </td>
+						<td>Procedimento Concursal Comum</td>
+						<td>CTFP por tempo indeterminado</td>
+						<td>Assistente Operacional</td>
+						<td>Assistente Operacional</td>
+						<td>Viana do Castelo</td>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl10_btnDetalhesOrganismo" title="Ver detalhes do Organismo" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl10$btnDetalhesOrganismo&#39;,&#39;&#39;)">Câmara Municipal de Paredes de Coura</a>
+                                            </td>
+						<td>Habilita&#231;&#227;o Ignorada</td>
+						<td class="minidatawidth">
+                                                <span>2026-09-15  </span>
+                                            </td>
+					</tr>
+					<tr class="AspNet-GridView-Alternate">
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl11_btnDetalhes" title="Ver detalhes da Oferta" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl11$btnDetalhes&#39;,&#39;&#39;)">OE202608/0849</a>
+                                            </td>
+						<td>Procedimento Concursal Comum</td>
+						<td>CTFP por tempo indeterminado</td>
+						<td>Assistente Operacional</td>
+						<td>Assistente Operacional</td>
+						<td>Viana do Castelo</td>
+						<td>
+                                                <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_GvOfertaGestao_ctl11_btnDetalhesOrganismo" title="Ver detalhes do Organismo" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao$ctl11$btnDetalhesOrganismo&#39;,&#39;&#39;)">Câmara Municipal de Paredes de Coura</a>
+                                            </td>
+						<td>Habilita&#231;&#227;o Ignorada</td>
+						<td class="minidatawidth">
+                                                <span>2026-09-15  </span>
+                                            </td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="AspNet-GridView-Pagination AspNet-GridView-Bottom">
+				<span>1</span>
+				<a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Page$2&#39;)">2</a>
+				<a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Page$3&#39;)">3</a>
+				<a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Page$4&#39;)">4</a>
+				<a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Page$5&#39;)">5</a>
+				<a href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$GvOfertaGestao&#39;,&#39;Page$2&#39;)">></a>
+			</div>
+
+	</div>
+                            </div>
+                        </div>
+                    
+</div>
+                    <div class="actions clearfix">
+                        <div class="fleft specific">
+                            <a id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_ucVoltar" title="Voltar para a página anterior" class="displayblock" href="javascript:__doPostBack(&#39;ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$ucVoltar&#39;,&#39;&#39;)"><span class='glyphicon glyphicon-chevron-left'></span> Voltar</a>
+                        </div>
+                        <div class="fright generic">
+                            <a href="javascript:window.print()" title="Imprimir a página" class="imprimir">Imprimir</a>
+                            <a href="#" class="topo" title="Voltar ao topo"><span class="glyphicon glyphicon-chevron-up"></span>Voltar ao topo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification" class="notificationPosition" style="display:none;">
+	<!-- 2022.1.302.45 --><div id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_popup" class="RadNotification RadNotification_Default rnRoundedCorners rnShadows notificationPosition" style="display:none;position:absolute;">
+		<div class="rnTitleBar" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_titlebar">
+			<span class="rnTitleBarIcon"><img src="/WebResource.axd?d=CZVn9yIcBNb4BMXatiSt3kzrlnivcQTFfEy-FreUAC0Xkg8oMt1pMCZiinqrCnWeamKwHH6MiIWP_pG4XUh5GtBMfvS24aIPnC3BD7aXgpe8c-d6lYcrPgJoy2J-4y9OefwOCA6YTFxFiA-45MN38sOcbBo1&amp;t=638979566320000000" alt="" /></span><span class="rnTitleBarTitle"></span><ul class="rnCommands">
+				<li class="rnCloseIcon"><a href="javascript:void(0);" title="Close" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_rnCloseIcon"></a></li>
+			</ul>
+		</div><div id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_XmlPanel" class="RadXmlHttpPanel">
+			<div id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_C" class="rnContentWrapper">
+				<div class="rnContentIconClipIn">
+					<div class="rnContentIconClip">
+						<img src="/WebResource.axd?d=CZVn9yIcBNb4BMXatiSt3kzrlnivcQTFfEy-FreUAC0Xkg8oMt1pMCZiinqrCnWeamKwHH6MiIWP_pG4XUh5GtBMfvS24aIPnC3BD7aXgpe8c-d6lYcrPgJoy2J-4y9OefwOCA6YTFxFiA-45MN38sOcbBo1&amp;t=638979566320000000" alt="" />
+					</div>
+				</div><div id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_simpleContentDiv" class="rnContent"></div>
+			</div><input type="hidden" name="ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$RadNotification$hiddenState" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_hiddenState" /><input id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_XmlPanel_ClientState" name="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_XmlPanel_ClientState" type="hidden" />
+		</div><div tabindex="0" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_TitleMenu">
+			<div class="RadMenu RadMenu_Default RadMenu_Context RadMenu_Default_Context rmRoundedCorners rmRoundedCorners_Default rmShadows">
+
+			</div><input class="rmActive rmVertical rmGroup rmLevel1" id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_TitleMenu_ClientState" name="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_TitleMenu_ClientState" type="hidden" />
+		</div>
+	</div><input id="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_ClientState" name="ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_ClientState" type="hidden" />
+</div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#opac").hide();
+        });
+    </script>
+
+<!--<img id="ctl00_ctl00_FormMasterContentPlaceHolder_imgBottomLeft" src="../../imagens/cantos/1left_bottom.jpg" style="height:5px;width:5px;border-width:0px;" />
+<img id="ctl00_ctl00_FormMasterContentPlaceHolder_imgBottomtransparent" src="../../imagens/cantos/bit_tranparent.gif" style="height:1px;width:1px;border-width:0px;" />
+<img id="ctl00_ctl00_FormMasterContentPlaceHolder_imgBottomRight" src="../../imagens/cantos/1right_bottom.jpg" style="height:5px;width:5px;border-width:0px;" />-->
+
+            
+           
+            <div id="push">
+            </div>
+            <!--pushes footer down-->
+        </div>
+        <!--wrapper-->
+        <footer class="mainfooter">
+            <section class="apoios">
+                <div class="container">
+                    <div class="row">
+                        <div class="row">
+                       
+                         <div class="col-sm-1 col-md-1"></div>
+                        <div class="col-xs-12 col-sm-3 col-md-3 centermini">
+                            <a href="http://www.portugal.gov.pt/pt.aspx" target="_blank" class="marginapoios" title="Governo de Portugal">
+                                <img src="../../Imagens/gov.png" id="ctl00_ctl00_Img1" alt="Logo Governo de Portugal" /></a>
+                        </div>
+                         <div class="col-sm-1 col-md-1"></div>
+                        <div class="col-xs-12 col-sm-3 col-md-3 centermini">
+                            <div class="tituloimgParceirosina">Entidade gestora</div>
+                            <a href="http://www.dgaep.gov.pt/" target="_blank" title="DGAEP">
+                                <img src="../../Imagens/images/DGAEP.png" id="ctl00_ctl00_Img2" width="120" alt="Logo INA" /></a>
+                        </div>
+                        <div class="col-sm-1 col-md-1"></div>
+                        <div class="col-xs-12 col-sm-3 col-md-3 centermini">
+                            <div class="tituloimgParceirosespap">Desenvolvimento e apoio técnico</div>
+                            <a href="http://www.espap.gov.pt/" target="_blank" title="ESPAP">
+                                <img src="../../Imagens/images/logoESPAP-horizontal_rgb.jpg" alt="Logo ESPAP" /></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="footerlinks">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="submitButton">Ofertas</label>
+                            <a href="Oferta_Pesquisa_basica.aspx" name="pesquisarofertas" title="Link para procurar ofertas">Pesquisar Oferta</a><br />
+                            <a href="Pesquisa_Resultados.aspx" title="Link para pesquisar resultados">Pesquisar Resultados</a><br />
+                            <a href="../CReSAP/CReSAP_Pesquisa.aspx" title="Link para lista de oferta Dirigentes Superiores">Listar Oferta Dirigentes Superiores</a><br />
+                            <a id="ctl00_ctl00_lnkbtnformulario" title="link para formularios" href="javascript:__doPostBack(&#39;ctl00$ctl00$lnkbtnformulario&#39;,&#39;&#39;)">Formulários</a><br />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="submitButton">Bolsa de Emprego Público</label>
+                            <a href="../SobreBep/Diploma.aspx" title="Link para Diploma">Diploma</a><br />
+                            <a href="../SobreBep/Objectivos.aspx" title="Link para objectivos">Objetivos</a><br />
+                            <a href="../SobreBep/Funcionalidades.aspx" title="Link para Funcionalidades">Funcionalidades</a><br />
+                            <a href="../Acessibilidade.aspx" title="Link para Acessibilidade">Acessibilidade</a><br />
+                            <a href="../SobreBep/EntidadeGestora.aspx" title="Link para entidade gestora">Entidade Gestora</a><br />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="submitButton">Links Úteis</label>
+                            <a href="javascript:void(0);" id="ctl00_ctl00_A5" title="Link para Oportunidades na UE">Oportunidades na UE</a><br />
+                            <a href="https://eures.europa.eu/jobseekers_pt" target="_blank" title="Link para Oportunidades na UE" style="padding-left: 25px;">Eures</a><br />
+                            <a href="https://eu-careers.europa.eu/en/about-epso" id="ctl00_ctl00_A2" target="_blank" title="Link para Oportunidades na UE" style="padding-left: 25px;">EPSO</a><br />
+                            <a href="http://www.carreirasinternacionais.eu" target="_blank" title="Link para Carreiras Internacionais">Carreiras Internacionais</a><br />
+                             <a href="https://idi.mne.gov.pt/pt/oportunidades/carreiras-internacionais" target="_blank" title="Link para Oportunidades no Instituto Diplomático" style="padding-left: 25px;">Instituto Diplomático</a><br />
+                            <a href="https://eurocid.mne.gov.pt/empregos" id="ctl00_ctl00_A1" target="_blank" title="Link para Oportunidades no EUROCID" style="padding-left: 25px;">EUROCID</a><br />
+                            <a href="https://www.ilo.org/lisbon/lang--pt/index.htm" target="_blank" title="Link para Org. Int. do Trabalho">Org. Int. do Trabalho</a><br />
+                            <a href="http://www.oecd.org/careers/" id="ctl00_ctl00_A3" target="_blank" title="Link para OCDE">OCDE</a><br />
+                            <a href="https://iefponline.iefp.pt/IEFP/pesquisas/search.do?cat=ofertaEmprego" id="ctl00_ctl00_A4" target="_blank" title="Link para Netemprego">Netemprego (IEFP)</a><br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="submitButton" style="color: white; text-align: center; border-bottom: none !important; margin-bottom: 0;">
+                                <br />
+                                Presidência do Conselho de Ministros</label>
+                            <label for="submitButton" style="color: white; text-align: center;">
+                                <span id="ctl00_ctl00_lblVersion" style="color:Gray;font-size:Smaller;">BEP v5.0.1.5 de 2025-12-03 @ 266</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+window.__TsmHiddenField = $get('ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadScriptManager1_TSM');
+WebForm_InitCallback();Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadXmlHttpPanel, {"_isCallbackPanel":true,"_uniqueId":"ctl00$ctl00$FormMasterContentPlaceHolder$ContentPlaceHolder1$RadNotification$XmlPanel","clientStateFieldID":"ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_XmlPanel_ClientState","enableClientScriptEvaluation":true,"loadingPanelID":""}, null, null, $get("ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_XmlPanel"));
+});
+Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadContextMenu, {"_childListElementCssClass":"rmActive rmVertical rmGroup rmLevel1","_skin":"Default","clientStateFieldID":"ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_TitleMenu_ClientState","collapseAnimation":"{\"duration\":450}","enableRoundedCorners":true,"enableShadows":true,"expandAnimation":"{\"duration\":450}","itemData":[],"targets":[]}, null, null, $get("ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_TitleMenu"));
+});
+Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadNotification, {"_audioMimeType":"audio/wav","_audioUrl":"none","animation":8,"autoCloseDelay":5000,"clientStateFieldID":"ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification_ClientState","formID":"aspnetForm","position":23,"width":"500px"}, null, null, $get("ctl00_ctl00_FormMasterContentPlaceHolder_ContentPlaceHolder1_RadNotification"));
+});
+//]]>
+</script>
+</form>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74371628-1"></script>
+    <script src='../../Javascript/analytics.js' type="text/javascript"></script>
+  
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+   
+</body>
+</html>

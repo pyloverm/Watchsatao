@@ -51,6 +51,14 @@ export interface BepResult {
    * ne sont pas lus. Remonté plutôt que tu, pour ne pas tronquer en silence.
    */
   readonly truncated: boolean;
+  /** Lignes d'offre lues avant filtrage sur l'entité. */
+  readonly rowsSeen: number;
+  /**
+   * Vrai quand la réponse est intelligible : soit l'avis d'absence d'offre,
+   * soit au moins une ligne de grille. À faux, le moteur a répondu autre chose
+   * que ce que l'on sait lire, et zéro offre ne veut alors rien dire.
+   */
+  readonly recognizable: boolean;
 }
 
 const EMPTY_NOTICE = /n[ãa]o\s+existem\s+ofertas/i;
@@ -90,6 +98,7 @@ export function parseBep(
   entityPattern: RegExp = ENTITY_PATTERN,
 ): BepResult {
   const offers = new Map<string, BepOffer>();
+  let rowsSeen = 0;
 
   for (const [, body] of html.matchAll(TABLE)) {
     for (const [, row] of (body ?? "").matchAll(ROW)) {
@@ -99,7 +108,12 @@ export function parseBep(
       if (columns.length < 9) continue;
 
       const code = OFFER_CODE.exec(columns[0] ?? "")?.[1];
-      if (code === undefined || offers.has(code)) continue;
+      if (code === undefined) continue;
+
+      // Comptée avant le filtre : c'est la preuve que la grille est lisible,
+      // indépendamment du fait qu'elle concerne Sátão ou non.
+      rowsSeen += 1;
+      if (offers.has(code)) continue;
 
       const entity = columns[6] ?? "";
       if (!entityPattern.test(fold(entity))) continue;
@@ -115,10 +129,14 @@ export function parseBep(
     }
   }
 
+  const emptyNoticeFound = EMPTY_NOTICE.test(html);
+
   return {
     offers: [...offers.values()],
-    emptyNoticeFound: EMPTY_NOTICE.test(html),
+    emptyNoticeFound,
     truncated: PAGER.test(html),
+    rowsSeen,
+    recognizable: emptyNoticeFound || rowsSeen > 0,
   };
 }
 

@@ -19,7 +19,9 @@ const SOURCE_LABELS: Readonly<Record<string, string>> = {
 export default async function Page() {
   const result = await runWatch();
   const open = result.state === "Aberto";
-  const bothDown = hasFailed(result.satao) && hasFailed(result.bep);
+  // Une source illisible ne permet pas d'affirmer « Fechado » : on ne montre
+  // un état du concours que lorsqu'on a de quoi le soutenir.
+  const blind = !result.reliable && !open;
 
   return (
     <main className="page">
@@ -29,11 +31,13 @@ export default async function Page() {
         plateforme municipale et sur la Bolsa de Emprego Público.
       </p>
 
-      {bothDown ? (
+      {blind ? (
         <div className="card card--error">
-          <p className="cardLabel">Les deux sources sont injoignables</p>
+          <p className="cardLabel">État indéterminé</p>
           <p className="cardDetail">
-            Aucun état ne peut être établi pour le moment.
+            La surveillance ne parvient pas à lire ses sources. Aucun état ne
+            peut être affirmé : une ouverture de candidatures pourrait passer
+            inaperçue.
           </p>
         </div>
       ) : (
@@ -46,6 +50,19 @@ export default async function Page() {
               : "Aucune procédure n'accepte de candidature pour le moment."}
           </p>
         </div>
+      )}
+
+      {result.anomalies.length > 0 && (
+        <section className="anomalies">
+          <h2 className="listTitle">Anomalies</h2>
+          <ul>
+            {result.anomalies.map((anomaly) => (
+              <li key={`${anomaly.source}:${anomaly.kind}`}>
+                {anomaly.message}
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
 
       {result.openings.length > 0 && (
@@ -82,21 +99,25 @@ export default async function Page() {
             <a href={SATAO_URL}>Plateforme municipale</a>{" "}
             {hasFailed(result.satao) ? (
               <span className="badge badge--down">injoignable</span>
-            ) : (
+            ) : result.satao.recognizable ? (
               <span className="meta">
                 {result.satao.processes.length} procédure(s)
               </span>
+            ) : (
+              <span className="badge badge--down">illisible</span>
             )}
           </li>
           <li>
             <a href={BEP_SEARCH_URL}>Bolsa de Emprego Público</a>{" "}
             {hasFailed(result.bep) ? (
               <span className="badge badge--down">injoignable</span>
-            ) : (
+            ) : result.bep.recognizable ? (
               <span className="meta">
-                {result.bep.offers.length} offre(s)
-                {result.bep.truncated ? ", résultats tronqués" : ""}
+                {result.bep.offers.length} offre(s) sur {result.bep.rowsSeen}{" "}
+                lue(s){result.bep.truncated ? ", résultats tronqués" : ""}
               </span>
+            ) : (
+              <span className="badge badge--down">illisible</span>
             )}
           </li>
         </ul>

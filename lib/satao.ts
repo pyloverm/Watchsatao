@@ -31,6 +31,16 @@ export interface SataoResult {
   readonly processes: readonly SataoProcess[];
   /** Vrai quand l'avis « aucun procédimento actif » est présent sur la page. */
   readonly emptyNoticeFound: boolean;
+  /**
+   * Vrai quand au moins un des deux signaux attendus a été reconnu.
+   *
+   * À faux, la page s'est chargée mais ne ressemble plus à ce que l'on sait
+   * lire : ni avis d'absence, ni lien de procédure. C'est indiscernable d'un
+   * état fermé si l'on ne regarde que `state`, et c'est précisément le silence
+   * que l'on refuse : une refonte de la page ferait afficher « Fechado » pour
+   * toujours sans que personne en soit averti.
+   */
+  readonly recognizable: boolean;
   readonly checkedAt: string;
 }
 
@@ -132,7 +142,13 @@ export function parseSatao(html: string, checkedAt: string): SataoResult {
   const state: ContestState =
     processes.length > 0 && !emptyNoticeFound ? "Aberto" : "Fechado";
 
-  return { state, processes, emptyNoticeFound, checkedAt };
+  return {
+    state,
+    processes,
+    emptyNoticeFound,
+    recognizable: emptyNoticeFound || processes.length > 0,
+    checkedAt,
+  };
 }
 
 /** Récupère puis parse la page municipale. */

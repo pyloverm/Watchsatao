@@ -1,6 +1,8 @@
 import {
+  anomalySignature,
   hasFailed,
   runWatch,
+  type Anomaly,
   type Opening,
   type WatchResult,
 } from "@/lib/watch";
@@ -16,6 +18,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 const STATE_KEY = "satao-watch:state";
+const ALERT_KEY = "satao-watch:alerte";
 
 /** Comparaison à temps constant, pour ne pas fuiter le secret octet par octet. */
 function secretMatches(provided: string, expected: string): boolean {
@@ -79,6 +82,44 @@ function openingEmail(result: WatchResult): { subject: string; html: string } {
   };
 }
 
+/**
+ * Alerte technique, volontairement distincte de l'alerte de concours : elle ne
+ * dit pas qu'un poste s'ouvre, elle dit que l'app a cessé de savoir le voir.
+ */
+function alertEmail(anomalies: readonly Anomaly[]): {
+  subject: string;
+  html: string;
+} {
+  const blind = anomalies.some((anomaly) => anomaly.kind === "unrecognized");
+
+  return {
+    subject: blind
+      ? "satao-watch : parsing hors service"
+      : "satao-watch : source injoignable",
+    html: [
+      "<h1>Alerte technique — ceci ne concerne aucun concours</h1>",
+      "<p>La surveillance ne fonctionne plus comme prévu :</p>",
+      `<ul>${anomalies.map((anomaly) => `<li>${escape(anomaly.message)}</li>`).join("")}</ul>`,
+      blind
+        ? "<p><strong>Tant que ce n'est pas corrigé, une ouverture de " +
+          "candidatures peut passer inaperçue.</strong> L'état affiché ne " +
+          "vaut plus rien.</p>"
+        : "<p>Si la source revient d'elle-même, un message de rétablissement " +
+          "suivra.</p>",
+    ].join(""),
+  };
+}
+
+function recoveryEmail(): { subject: string; html: string } {
+  return {
+    subject: "satao-watch : surveillance rétablie",
+    html:
+      "<h1>Surveillance rétablie</h1>" +
+      "<p>Les deux sources répondent de nouveau et sont comprises. " +
+      "L'état affiché est de nouveau fiable.</p>",
+  };
+}
+
 export async function GET(request: Request): Promise<Response> {
   if (!authorized(request)) {
     return Response.json({ error: "Non autorisé." }, { status: 401 });
@@ -98,6 +139,21 @@ export async function GET(request: Request): Promise<Response> {
     );
   }
 
+  // L'alerte technique part avant toute autre considération : si l'app ne
+  // sait plus lire ses sources, c'est la seule information qui compte.
+  const signature = anomalySignature(result.anomalies);
+  const previousSignature = (await readState(ALERT_KEY)) ?? "";
+  let alerted = false;
+
+  if (signature !== previousSignature) {
+    if (signature !== "") {
+      alerted = (await sendEmail(alertEmail(result.anomalies))).sent;
+    } else if (previousSignature !== "") {
+      alerted = (await sendEmail(recoveryEmail())).sent;
+    }
+    await writeState(ALERT_KEY, signature);
+  }
+
   const previous = await readState(STATE_KEY);
   const changed = previous !== result.state;
   let notified = false;
@@ -109,16 +165,21 @@ export async function GET(request: Request): Promise<Response> {
     notified = (await sendEmail(openingEmail(result))).sent;
   }
 
-  if (changed) {
+  // Un état tiré d'une source illisible n'est pas mémorisé : le retenir
+  // ferait passer le vrai changement pour un non-événement au retour.
+  if (changed && result.reliable) {
     await writeState(STATE_KEY, result.state);
   }
 
   return Response.json({
     state: result.state,
+    reliable: result.reliable,
+    anomalies: result.anomalies,
     openings: result.openings,
     previousState: previous ?? null,
     changed,
     notified,
+    alerted,
     stateStorage: stateStorageConfigured(),
     sources: {
       satao: hasFailed(result.satao)
@@ -127,13 +188,16 @@ export async function GET(request: Request): Promise<Response> {
             state: result.satao.state,
             processes: result.satao.processes.length,
             emptyNoticeFound: result.satao.emptyNoticeFound,
+            recognizable: result.satao.recognizable,
           },
       bep: hasFailed(result.bep)
         ? { failed: true, message: result.bep.message }
         : {
             offers: result.bep.offers.length,
+            rowsSeen: result.bep.rowsSeen,
             emptyNoticeFound: result.bep.emptyNoticeFound,
             truncated: result.bep.truncated,
+            recognizable: result.bep.recognizable,
           },
     },
     checkedAt: result.checkedAt,

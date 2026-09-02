@@ -48,12 +48,78 @@ export function hasFailed<T extends object>(
   return "failed" in value;
 }
 
+/**
+ * Ce qui empêche de croire le résultat.
+ *
+ * `unreachable` : la source n'a pas répondu. Bruyant par nature, la requête
+ * ayant échoué.
+ * `unrecognized` : la source a répondu, mais sa page n'est plus lisible. C'est
+ * le cas dangereux : sans ce signal, l'app afficherait « Fechado » pour
+ * toujours après une refonte, sans que rien ne le signale.
+ */
+export type AnomalyKind = "unreachable" | "unrecognized";
+
+export interface Anomaly {
+  readonly source: SourceName;
+  readonly kind: AnomalyKind;
+  readonly message: string;
+}
+
 export interface WatchResult {
   readonly state: ContestState;
   readonly openings: readonly Opening[];
   readonly satao: SataoResult | SourceFailure;
   readonly bep: BepResult | SourceFailure;
+  /** Vide quand les deux sources ont répondu et ont été comprises. */
+  readonly anomalies: readonly Anomaly[];
+  /**
+   * Faux dès qu'une source est muette ou illisible : `state` ne vaut alors
+   * pas mieux qu'une supposition et ne doit pas être affiché tel quel.
+   */
+  readonly reliable: boolean;
   readonly checkedAt: string;
+}
+
+const SOURCE_TITLES: Readonly<Record<SourceName, string>> = {
+  satao: "la plateforme municipale de Sátão",
+  bep: "la Bolsa de Emprego Público",
+};
+
+/** Relève ce qui cloche dans une source, muette comme illisible. */
+export function inspect(
+  source: SourceName,
+  result: { readonly recognizable: boolean } | SourceFailure,
+): Anomaly | undefined {
+  const title = SOURCE_TITLES[source];
+
+  if (hasFailed(result)) {
+    return {
+      source,
+      kind: "unreachable",
+      message: `${title} n'a pas répondu : ${result.message}`,
+    };
+  }
+
+  if (!result.recognizable) {
+    return {
+      source,
+      kind: "unrecognized",
+      message:
+        `${title} a répondu, mais aucun des signaux attendus n'a été ` +
+        "reconnu dans sa page. Le parsing est probablement à refaire : tant " +
+        "qu'il ne l'est pas, une ouverture peut passer inaperçue.",
+    };
+  }
+
+  return undefined;
+}
+
+/** Signature stable des anomalies, pour ne pas réalerter à l'identique. */
+export function anomalySignature(anomalies: readonly Anomaly[]): string {
+  return [...anomalies]
+    .map((anomaly) => `${anomaly.source}:${anomaly.kind}`)
+    .sort()
+    .join("|");
 }
 
 function fromSatao(process: SataoProcess): Opening {
@@ -163,11 +229,17 @@ export async function runWatch(): Promise<WatchResult> {
   const bepOffers = hasFailed(bep) ? [] : bep.offers;
   const openings = mergeOpenings(sataoProcesses, bepOffers);
 
+  const anomalies = [inspect("satao", satao), inspect("bep", bep)].filter(
+    (anomaly): anomaly is Anomaly => anomaly !== undefined,
+  );
+
   return {
     state: openings.length > 0 ? "Aberto" : "Fechado",
     openings,
     satao,
     bep,
+    anomalies,
+    reliable: anomalies.length === 0,
     checkedAt: new Date().toISOString(),
   };
 }

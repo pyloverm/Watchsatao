@@ -156,14 +156,14 @@ export async function fetchSatao(): Promise<SataoResult> {
   const response = await fetch(SATAO_URL, {
     cache: "no-store",
     headers: {
-      "User-Agent": "satao-watch (surveillance de procédures concursais)",
+      "User-Agent": "satao-watch (monitorização de procedimentos concursais)",
       Accept: "text/html",
     },
   });
 
   if (!response.ok) {
     throw new Error(
-      `La source municipale a répondu ${response.status} ${response.statusText}.`,
+      `A fonte municipal respondeu ${response.status} ${response.statusText}.`,
     );
   }
 
@@ -201,7 +201,7 @@ export async function fetchBepCode(
     const response = await fetch(processUrl, {
       cache: "no-store",
       headers: {
-        "User-Agent": "satao-watch (surveillance de procédures concursais)",
+        "User-Agent": "satao-watch (monitorização de procedimentos concursais)",
         Accept: "text/html",
       },
     });

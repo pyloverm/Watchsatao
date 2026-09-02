@@ -60,8 +60,8 @@ function line(opening: Opening): string {
     opening.entity,
     opening.deadline === undefined
       ? undefined
-      : `candidatures jusqu'au ${opening.deadline}`,
-    `annoncée par ${opening.sources.join(" et ")}`,
+      : `candidaturas até ${opening.deadline}`,
+    `anunciada por ${opening.sources.join(" e ")}`,
   ]
     .filter((part): part is string => part !== undefined && part !== "")
     .map(escape)
@@ -72,11 +72,11 @@ function line(opening: Opening): string {
 
 function openingEmail(result: WatchResult): { subject: string; html: string } {
   return {
-    subject: `Sátão : ${result.openings.length} candidature(s) ouverte(s)`,
+    subject: `Sátão: ${result.openings.length} candidatura(s) aberta(s)`,
     html: [
-      "<h1>Un procédimento concursal accepte des candidatures</h1>",
+      "<h1>Um procedimento concursal aceita candidaturas</h1>",
       `<ul>${result.openings.map(line).join("")}</ul>`,
-      '<p><a href="https://recrutamento.cm-satao.pt/processos-ativos">Plateforme municipale</a> · ',
+      '<p><a href="https://recrutamento.cm-satao.pt/processos-ativos">Plataforma municipal</a> · ',
       '<a href="https://www.bep.gov.pt/pages/oferta/Oferta_Pesquisa_basica.aspx">Bolsa de Emprego Público</a></p>',
     ].join(""),
   };
@@ -94,35 +94,35 @@ function alertEmail(anomalies: readonly Anomaly[]): {
 
   return {
     subject: blind
-      ? "satao-watch : parsing hors service"
-      : "satao-watch : source injoignable",
+      ? "satao-watch: análise da página fora de serviço"
+      : "satao-watch: fonte inacessível",
     html: [
-      "<h1>Alerte technique — ceci ne concerne aucun concours</h1>",
-      "<p>La surveillance ne fonctionne plus comme prévu :</p>",
+      "<h1>Alerta técnico — não diz respeito a nenhum concurso</h1>",
+      "<p>A monitorização deixou de funcionar como previsto:</p>",
       `<ul>${anomalies.map((anomaly) => `<li>${escape(anomaly.message)}</li>`).join("")}</ul>`,
       blind
-        ? "<p><strong>Tant que ce n'est pas corrigé, une ouverture de " +
-          "candidatures peut passer inaperçue.</strong> L'état affiché ne " +
-          "vaut plus rien.</p>"
-        : "<p>Si la source revient d'elle-même, un message de rétablissement " +
-          "suivra.</p>",
+        ? "<p><strong>Enquanto não for corrigido, uma abertura de " +
+          "candidaturas pode passar despercebida.</strong> O estado " +
+          "apresentado deixou de ter valor.</p>"
+        : "<p>Se a fonte voltar por si, seguir-se-á uma mensagem de " +
+          "reposição.</p>",
     ].join(""),
   };
 }
 
 function recoveryEmail(): { subject: string; html: string } {
   return {
-    subject: "satao-watch : surveillance rétablie",
+    subject: "satao-watch: monitorização reposta",
     html:
-      "<h1>Surveillance rétablie</h1>" +
-      "<p>Les deux sources répondent de nouveau et sont comprises. " +
-      "L'état affiché est de nouveau fiable.</p>",
+      "<h1>Monitorização reposta</h1>" +
+      "<p>Ambas as fontes voltaram a responder e são compreendidas. " +
+      "O estado apresentado é de novo fiável.</p>",
   };
 }
 
 export async function GET(request: Request): Promise<Response> {
   if (!authorized(request)) {
-    return Response.json({ error: "Non autorisé." }, { status: 401 });
+    return Response.json({ error: "Não autorizado." }, { status: 401 });
   }
 
   const result = await runWatch();
@@ -131,7 +131,7 @@ export async function GET(request: Request): Promise<Response> {
   if (hasFailed(result.satao) && hasFailed(result.bep)) {
     return Response.json(
       {
-        error: "Les deux sources sont injoignables.",
+        error: "Ambas as fontes estão inacessíveis.",
         satao: result.satao.message,
         bep: result.bep.message,
       },

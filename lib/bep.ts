@@ -211,7 +211,7 @@ export async function fetchBep(
 
   const home = await fetch(BEP_HOME, { cache: "no-store", headers: HEADERS });
   if (!home.ok) {
-    throw new Error(`La BEP a répondu ${home.status} sur l'accueil.`);
+    throw new Error(`A BEP respondeu ${home.status} na página inicial.`);
   }
   collectCookies(home, jar);
 
@@ -220,7 +220,7 @@ export async function fetchBep(
     headers: { ...HEADERS, Cookie: cookieHeader(jar) },
   });
   if (!form.ok) {
-    throw new Error(`La BEP a répondu ${form.status} sur le formulaire.`);
+    throw new Error(`A BEP respondeu ${form.status} no formulário.`);
   }
   collectCookies(form, jar);
 
@@ -228,8 +228,8 @@ export async function fetchBep(
   const body = buildSearchBody(formHtml, query);
   if (body === undefined) {
     throw new Error(
-      "Le formulaire de la BEP ne présente plus les champs attendus " +
-        "(txtValor, ucSearch) : le moteur a probablement changé.",
+      "O formulário da BEP já não apresenta os campos esperados " +
+        "(txtValor, ucSearch): o motor terá mudado.",
     );
   }
 
@@ -245,7 +245,7 @@ export async function fetchBep(
     body,
   });
   if (!results.ok) {
-    throw new Error(`La BEP a répondu ${results.status} à la recherche.`);
+    throw new Error(`A BEP respondeu ${results.status} à pesquisa.`);
   }
 
   return parseBep(await results.text(), entityPattern);

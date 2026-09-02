@@ -1,0 +1,150 @@
+:root {
+  --bg: #0f1115;
+  --surface: #171a21;
+  --border: #262b36;
+  --text: #e7e9ee;
+  --text-muted: #9aa3b2;
+  --open: #4ade80;
+  --open-surface: #12241a;
+  --open-border: #1f5133;
+  --closed: #94a3b8;
+  --error: #f87171;
+  --error-surface: #26161a;
+  --error-border: #5b2730;
+  --radius: 12px;
+  --space: 1rem;
+  --measure: 46rem;
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --border: #e2e5ea;
+    --text: #14171c;
+    --text-muted: #5b6472;
+    --open: #15803d;
+    --open-surface: #ecfdf3;
+    --open-border: #a7e3bf;
+    --closed: #64748b;
+    --error: #b91c1c;
+    --error-surface: #fef2f2;
+    --error-border: #f3bcbc;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: calc(var(--space) * 2.5) var(--space);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.55;
+}
+
+.page {
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  margin: 0.25rem 0 calc(var(--space) * 1.75);
+  color: var(--text-muted);
+}
+
+.card {
+  padding: calc(var(--space) * 1.25);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.card--open {
+  background: var(--open-surface);
+  border-color: var(--open-border);
+}
+
+.card--error {
+  background: var(--error-surface);
+  border-color: var(--error-border);
+}
+
+.cardLabel {
+  margin: 0;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.state {
+  margin: 0.35rem 0 0;
+  font-size: 2.25rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--closed);
+}
+
+.card--open .state {
+  color: var(--open);
+}
+
+.cardDetail {
+  margin: 0.35rem 0 0;
+  color: var(--text-muted);
+}
+
+.card--error .cardDetail {
+  color: var(--error);
+}
+
+.list {
+  margin-top: calc(var(--space) * 1.5);
+}
+
+.listTitle {
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+}
+
+.list ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.list li + li {
+  margin-top: 0.4rem;
+}
+
+.footer {
+  margin-top: calc(var(--space) * 2);
+  padding-top: var(--space);
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.footer p {
+  margin: 0.2rem 0;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}

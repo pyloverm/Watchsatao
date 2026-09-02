@@ -49,7 +49,29 @@ const NAMED_ENTITIES: Readonly<Record<string, string>> = {
   gt: ">",
   quot: '"',
   apos: "'",
-  nbsp: " ",
+  nbsp: "\u00a0",
+  // La source rend l'UTF-8 en clair, mais les intitulés portugais sont pleins
+  // de caractères qu'un changement de rendu encoderait en entités nommées.
+  aacute: "á",
+  acirc: "â",
+  agrave: "à",
+  atilde: "ã",
+  ccedil: "ç",
+  eacute: "é",
+  ecirc: "ê",
+  iacute: "í",
+  oacute: "ó",
+  ocirc: "ô",
+  otilde: "õ",
+  uacute: "ú",
+  Aacute: "Á",
+  Atilde: "Ã",
+  Ccedil: "Ç",
+  Eacute: "É",
+  Iacute: "Í",
+  Oacute: "Ó",
+  Otilde: "Õ",
+  Uacute: "Ú",
 };
 
 /** Décode les entités HTML courantes, sans dépendance ni DOM. */
@@ -66,7 +88,7 @@ export function decodeHtml(input: string): string {
         const code = Number.parseInt(entity.slice(1), 10);
         return Number.isNaN(code) ? match : String.fromCodePoint(code);
       }
-      return NAMED_ENTITIES[lower] ?? match;
+      return NAMED_ENTITIES[entity] ?? NAMED_ENTITIES[lower] ?? match;
     },
   );
 }

@@ -5,7 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "satao-watch",
   description:
-    "Surveillance des procédures concursais de la Câmara Municipal de Sátão.",
+    "Monitorização dos procedimentos concursais da Câmara Municipal de Sátão.",
 };
 
 export default function RootLayout({
@@ -14,7 +14,7 @@ export default function RootLayout({
   readonly children: ReactNode;
 }) {
   return (
-    <html lang="fr">
+    <html lang="pt-PT">
       <body>{children}</body>
     </html>
   );

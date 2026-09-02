@@ -81,8 +81,8 @@ export interface WatchResult {
 }
 
 const SOURCE_TITLES: Readonly<Record<SourceName, string>> = {
-  satao: "la plateforme municipale de Sátão",
-  bep: "la Bolsa de Emprego Público",
+  satao: "a plataforma municipal de Sátão",
+  bep: "a Bolsa de Emprego Público",
 };
 
 /** Relève ce qui cloche dans une source, muette comme illisible. */
@@ -96,7 +96,7 @@ export function inspect(
     return {
       source,
       kind: "unreachable",
-      message: `${title} n'a pas répondu : ${result.message}`,
+      message: `${title} não respondeu: ${result.message}`,
     };
   }
 
@@ -105,9 +105,9 @@ export function inspect(
       source,
       kind: "unrecognized",
       message:
-        `${title} a répondu, mais aucun des signaux attendus n'a été ` +
-        "reconnu dans sa page. Le parsing est probablement à refaire : tant " +
-        "qu'il ne l'est pas, une ouverture peut passer inaperçue.",
+        `${title} respondeu, mas nenhum dos sinais esperados foi reconhecido ` +
+        "na sua página. A análise precisa provavelmente de ser refeita: " +
+        "enquanto não o for, uma abertura pode passar despercebida.",
     };
   }
 
@@ -126,7 +126,7 @@ function fromSatao(process: SataoProcess): Opening {
   return {
     key: process.bepCode ?? `satao:${process.id}`,
     code: process.bepCode,
-    title: process.title || `Procédure ${process.id}`,
+    title: process.title || `Procedimento ${process.id}`,
     url: process.url,
     entity: undefined,
     deadline: undefined,

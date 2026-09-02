@@ -51,7 +51,7 @@ describe("détection d'un parsing hors service", () => {
     const anomaly = inspect("satao", result);
     assert.ok(anomaly, "aucune anomalie relevée sur une page illisible");
     assert.equal(anomaly.kind, "unrecognized");
-    assert.match(anomaly.message, /plateforme municipale/);
+    assert.match(anomaly.message, /plataforma municipal/);
   });
 
   it("signale une source muette", () => {

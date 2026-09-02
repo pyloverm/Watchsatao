@@ -15,10 +15,15 @@ export const SATAO_URL = "https://recrutamento.cm-satao.pt/processos-ativos";
 export type ContestState = "Aberto" | "Fechado";
 
 export interface SataoProcess {
-  /** `recruitment_process_id` de la source, utilisé comme clé de déduplication. */
+  /** `recruitment_process_id`, identifiant propre à la source municipale. */
   readonly id: string;
   readonly title: string;
   readonly url: string;
+  /**
+   * Code d'offre BEP, seul identifiant commun aux deux sources. Il ne figure
+   * pas dans la liste : il faut ouvrir la fiche pour le lire.
+   */
+  readonly bepCode?: string;
 }
 
 export interface SataoResult {
@@ -26,6 +31,16 @@ export interface SataoResult {
   readonly processes: readonly SataoProcess[];
   /** Vrai quand l'avis « aucun procédimento actif » est présent sur la page. */
   readonly emptyNoticeFound: boolean;
+  /**
+   * Vrai quand au moins un des deux signaux attendus a été reconnu.
+   *
+   * À faux, la page s'est chargée mais ne ressemble plus à ce que l'on sait
+   * lire : ni avis d'absence, ni lien de procédure. C'est indiscernable d'un
+   * état fermé si l'on ne regarde que `state`, et c'est précisément le silence
+   * que l'on refuse : une refonte de la page ferait afficher « Fechado » pour
+   * toujours sans que personne en soit averti.
+   */
+  readonly recognizable: boolean;
   readonly checkedAt: string;
 }
 
@@ -49,7 +64,29 @@ const NAMED_ENTITIES: Readonly<Record<string, string>> = {
   gt: ">",
   quot: '"',
   apos: "'",
-  nbsp: " ",
+  nbsp: "\u00a0",
+  // La source rend l'UTF-8 en clair, mais les intitulés portugais sont pleins
+  // de caractères qu'un changement de rendu encoderait en entités nommées.
+  aacute: "á",
+  acirc: "â",
+  agrave: "à",
+  atilde: "ã",
+  ccedil: "ç",
+  eacute: "é",
+  ecirc: "ê",
+  iacute: "í",
+  oacute: "ó",
+  ocirc: "ô",
+  otilde: "õ",
+  uacute: "ú",
+  Aacute: "Á",
+  Atilde: "Ã",
+  Ccedil: "Ç",
+  Eacute: "É",
+  Iacute: "Í",
+  Oacute: "Ó",
+  Otilde: "Õ",
+  Uacute: "Ú",
 };
 
 /** Décode les entités HTML courantes, sans dépendance ni DOM. */
@@ -66,7 +103,7 @@ export function decodeHtml(input: string): string {
         const code = Number.parseInt(entity.slice(1), 10);
         return Number.isNaN(code) ? match : String.fromCodePoint(code);
       }
-      return NAMED_ENTITIES[lower] ?? match;
+      return NAMED_ENTITIES[entity] ?? NAMED_ENTITIES[lower] ?? match;
     },
   );
 }
@@ -105,7 +142,13 @@ export function parseSatao(html: string, checkedAt: string): SataoResult {
   const state: ContestState =
     processes.length > 0 && !emptyNoticeFound ? "Aberto" : "Fechado";
 
-  return { state, processes, emptyNoticeFound, checkedAt };
+  return {
+    state,
+    processes,
+    emptyNoticeFound,
+    recognizable: emptyNoticeFound || processes.length > 0,
+    checkedAt,
+  };
 }
 
 /** Récupère puis parse la page municipale. */
@@ -125,4 +168,46 @@ export async function fetchSatao(): Promise<SataoResult> {
   }
 
   return parseSatao(await response.text(), new Date().toISOString());
+}
+
+/**
+ * Code d'offre BEP porté par la fiche d'une procédure, sous la forme
+ * « Código da BEP: OE202507/1239 ». C'est le seul identifiant commun aux deux
+ * sources, donc la clé de déduplication.
+ */
+const BEP_CODE_LABELLED = /c[óo]digo\s+da\s+bep\s*:?\s*(OE\d{6}\/\d{4})/i;
+const BEP_CODE_BARE = /\b(OE\d{6}\/\d{4})\b/;
+
+/** Extrait le code BEP d'une fiche de procédure déjà récupérée. */
+export function extractBepCode(detailHtml: string): string | undefined {
+  const text = decodeHtml(detailHtml.replace(/<[^>]*>/g, " ")).replace(
+    /\s+/g,
+    " ",
+  );
+  return (
+    BEP_CODE_LABELLED.exec(text)?.[1] ?? BEP_CODE_BARE.exec(text)?.[1]
+  );
+}
+
+/**
+ * Récupère la fiche d'une procédure pour en lire le code BEP. Une fiche
+ * illisible n'est pas fatale : la procédure reste signalée, simplement sans
+ * clé commune avec la BEP.
+ */
+export async function fetchBepCode(
+  processUrl: string,
+): Promise<string | undefined> {
+  try {
+    const response = await fetch(processUrl, {
+      cache: "no-store",
+      headers: {
+        "User-Agent": "satao-watch (surveillance de procédures concursais)",
+        Accept: "text/html",
+      },
+    });
+    if (!response.ok) return undefined;
+    return extractBepCode(await response.text());
+  } catch {
+    return undefined;
+  }
 }
